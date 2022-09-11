@@ -1,0 +1,34 @@
+### Task: ###
+## Description
+# You’d need to prepare a simple script which parse log file from nginx, convert it to csv file and store csv file in Git.
+# Requirements
+# - You can use any script language you’d like
+# - The resulting script must have the ability to parse nginx logs, convert it to csv and srore it into Git
+# - README with enough information
+# Bonus points
+# - Dockerfile - Options for a run script, such a sort, filter and so on
+#############
+
+Resolution:
+parse_nginx_log.py [-h] [-i <input_file>] [-o <output_file>] [-g <git_repository>]
+-h - help option
+-i | --ifile - input file - nginx log file
+-o | --ofile - output file - result file with parsed data
+-g | --git - git repository
+
+the options has default value:
+if input file is None - nginx.log from application working directory
+if output file is None - will be created directory 'parsed' in application working directory and generated file parsed/nginx.csv
+if repo is None - will be generated local git repository in directory 'parsed'
+
+the script works with remote repository via https. To use it specify repo link in format:
+ -g https://<user_name>:<password_or_app_key>@git_link
+
+
+Docker usage:
+Run image build command in the application directory with requrements.txt and parse_nginx_log.py files:
+$ docker build -t <image_name> .
+
+Run command to launch container. Specify volumes with nginx.log file, volume with result folder,
+and specify pathes to log, csv files, repository link as well:
+$ docker run --rm -v /path/to/nginx.log [-v /path/to/nginx.csv:/tmp/nginx.csv] <image_name> -i nginx.log -o /tmp/nginx.csv -g repository_link

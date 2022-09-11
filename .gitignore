@@ -1,0 +1,4 @@
+.idea/
+venv/
+.git/
+parse_nginx_log.7z
